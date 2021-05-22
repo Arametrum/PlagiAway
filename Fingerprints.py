@@ -56,7 +56,7 @@ def generateRandomHand(queryTable):
 def generateParagraphHand(queryTable, paragraphNum):
     random.shuffle(queryTable)
 
-    actualSize = max(int(HAND_SIZE/paragraphNum), MIN_HAND_SIZE)
+    actualSize = desiredHandSize(paragraphNum)
 
     rawText = [rT[0] for rT in queryTable[:actualSize]]
     text = [T[1][0] for T in queryTable[:actualSize]]
@@ -65,6 +65,14 @@ def generateParagraphHand(queryTable, paragraphNum):
     return (rawText, text, hashes)
     pass
 
+#Shuffle and cut down fingerprint table
+def prepareFingerprintTable(queryTable, desHandSize):
+    random.shuffle(queryTable)
 
-#Generate hand based on paragraphs
-#Generate hand based on a cross pattern
+    return queryTable[:desHandSize]
+    pass
+
+#Find desired hand size
+def desiredHandSize(paragraphNum):
+    return max(int(HAND_SIZE/paragraphNum), MIN_HAND_SIZE)
+    pass

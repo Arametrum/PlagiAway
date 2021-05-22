@@ -46,7 +46,8 @@ def readByParagraphs(path):
             for i in words:
                 paragraph.append(i)
 
-        data.append(paragraph)
+        if paragraph:
+            data.append(paragraph)
     except:
         return []
 
