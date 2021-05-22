@@ -50,5 +50,10 @@ def compareParagraphs(suspectDocument, comparisonDocument, fPrintSize):
 
 #Compare two non-paragraph files
 def compareFiles(suspectFile, comparisonFile, fPrintSize):
+    suspectFingerprints = fp.generateFingerprints(suspectFile, fPrintSize)
 
+    comparisonFingerprints = fp.generateFingerprints(comparisonFile, fPrintSize)
+    comparisonHand = fp.generateRandomHand(comparisonFingerprints)
+
+    return compareHands(suspectFingerprints, comparisonHand)
     pass
