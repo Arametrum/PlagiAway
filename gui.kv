@@ -1,0 +1,262 @@
+WindowManager:
+	MainWindow:
+	ModeSelectWindow:
+	ParFileWindow:
+	PlainFileWindow:
+	ParFileResultsWindow:
+	PlainResultsWindow:
+	ParSingleResultsWindow:
+	ParMatchedStringsWindow:
+	PlainMatchedStringsWindow:
+
+<MainWindow>:
+	name: "main"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "PlagiAway"
+			font_size: 32
+			
+		Button:
+			text: "START"
+			on_release: app.root.current = "modeSel"
+
+<ModeSelectWindow>:
+	name: "modeSel"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Choose mode"
+			font_size: 32
+
+		BoxLayout:
+			orientation: "horizontal"
+
+			Button:
+				text: "PLAIN"
+				on_release: app.root.current = "plainFile"
+
+			Button:
+				text: "PARAGRAPH"
+				on_release: app.root.current = "parFile"
+
+<ParFileWindow>:
+	name: "parFile"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Drag your files onto the input fields"
+
+		GridLayout:
+			cols:2
+			rows: 2
+
+			Label:
+				text: "Suspect file"
+
+			TextInput:
+				id: parSusFile
+
+			Label:
+				text: "Source file"
+
+			TextInput:
+				id: parSrcFile
+
+		BoxLayout:
+			orientation: "horizontal"
+
+			Button:
+				text: "SELECT"
+				on_release: app.root.current = "parFileRes"
+
+			Button:
+				text: "RETURN"
+				on_release: app.root.current = "modeSel"
+
+<PlainFileWindow>:
+	name: "plainFile"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Drag your files onto the input fields"
+
+		GridLayout:
+			cols:2
+			rows: 2
+
+			Label:
+				text: "Suspect file"
+
+			TextInput:
+				id: plainSusFile
+
+
+			Label:
+				text: "Source file"
+
+			TextInput:
+				id: plainSrcFile
+
+
+		BoxLayout:
+			orientation: "horizontal"
+
+			Button:
+				text: "SELECT"
+				on_release: 
+					root.plainSelect()
+					app.root.current = "plainRes"
+
+			Button:
+				text: "RETURN"
+				on_release: app.root.current = "modeSel"
+
+
+<ParFileResultsWindow>:
+	name: "parFileRes"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Aggregated comparison results"
+
+		GridLayout:
+			cols: 2
+			rows: 3
+
+			Label:
+				text: "Average overlap"
+			Label:
+				text: "val"
+			Label:
+				text: "Highest overlap"
+			Label:
+				text: "val"
+
+			Button:
+				text: "DETAILS"
+				on_release: app.root.current = "parSingleRes"
+
+			Button:
+				text: "BACK TO MENU"
+				on_release: app.root.current = "main"
+
+
+<PlainResultsWindow>:
+	name: "plainRes"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Aggregated comparison results"
+
+		GridLayout:
+			cols: 2
+			rows: 3
+
+			Label:
+				text: "Average overlap"
+			Label:
+				text: "val"
+			Label:
+				text: "Highest overlap"
+			Label:
+				text: "val"
+
+			Button:
+				text: "DETAILS"
+				on_release: app.root.current = "plainString"
+
+			Button:
+				text: "BACK TO MENU"
+				on_release: app.root.current = "main"
+
+<ParSingleResultsWindow>:
+	name: "parSingleRes"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Button:
+			text: "RETURN"
+			on_release: app.root.current = "parFileRes"
+
+<ParMatchedStringsWindow>:
+	name: "parString"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Possible matches"
+
+		ScrollView:
+			bar_width: 6
+			bar_color: [0.5, 0.5, 0.2, 0.7]
+
+			BoxLayout:
+				orientation: "vertical"
+				size_hint_y: None
+				size_hint_x: 1
+
+				height: self.minimum_height
+
+		Button:
+			text: "RETURN"
+			on_release: app.root.current = "parSingleRes"
+
+<PlainMatchedStringsWindow>:
+	name: "plainString"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Possible matches"
+
+		ScrollView:
+			bar_width: 6
+			bar_color: [0.5, 0.5, 0.2, 0.7]
+
+			BoxLayout:
+				orientation: "vertical"
+				size_hint_y: None
+				size_hint_x: 1
+
+				height: self.minimum_height
+
+				Label:
+					text: "beep"
+					size_hint_y: None
+
+				Label:
+					text: "bap"
+					size_hint_y: None
+
+				Label:
+					text: "boop"
+					size_hint_y: None
+		
+		Button:
+			text: "RETURN"
+			on_release: app.root.current = "plainRes"

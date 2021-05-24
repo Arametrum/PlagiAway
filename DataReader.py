@@ -22,6 +22,8 @@ def readFile(path):
             
             for i in words:
                 data.append(i)
+
+        file.close()
     except:
         return []
 
@@ -48,6 +50,8 @@ def readByParagraphs(path):
 
         if paragraph:
             data.append(paragraph)
+
+        file.close()
     except:
         return []
 
