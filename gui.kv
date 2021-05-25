@@ -1,8 +1,10 @@
 WindowManager:
 	MainWindow:
 	ModeSelectWindow:
-	ParFileWindow:
-	PlainFileWindow:
+	ParSusWindow:
+	ParCompWindow:
+	PlainSusWindow:
+	PlainCompWindow:
 	ParFileResultsWindow:
 	PlainResultsWindow:
 	ParSingleResultsWindow:
@@ -40,25 +42,28 @@ WindowManager:
 
 			Button:
 				text: "PLAIN"
-				on_release: app.root.current = "plainFile"
+				on_release: 
+					root.plain()
+					app.root.current = "plainSus"
 
 			Button:
 				text: "PARAGRAPH"
-				on_release: app.root.current = "parFile"
+				on_release: 
+					root.par()
+					app.root.current = "parSus"
 
-<ParFileWindow>:
-	name: "parFile"
+<ParSusWindow>:
+	name: "parSus"
 
 	BoxLayout:
 		orientation: "vertical"
 		size: root.width, root.height
 
 		Label:
-			text: "Drag your files onto the input fields"
+			text: "Drag your file onto the input field"
 
-		GridLayout:
-			cols:2
-			rows: 2
+		BoxLayout:
+			orientation: "horizontal"
 
 			Label:
 				text: "Suspect file"
@@ -66,36 +71,63 @@ WindowManager:
 			TextInput:
 				id: parSusFile
 
-			Label:
-				text: "Source file"
-
-			TextInput:
-				id: parSrcFile
-
 		BoxLayout:
 			orientation: "horizontal"
 
 			Button:
 				text: "SELECT"
-				on_release: app.root.current = "parFileRes"
+				on_release: 
+					root.select()
+					app.root.current = "parComp"
 
 			Button:
 				text: "RETURN"
 				on_release: app.root.current = "modeSel"
 
-<PlainFileWindow>:
-	name: "plainFile"
+<ParCompWindow>:
+	name: "parComp"
 
 	BoxLayout:
 		orientation: "vertical"
 		size: root.width, root.height
 
 		Label:
-			text: "Drag your files onto the input fields"
+			text: "Drag your file onto the input field"
 
-		GridLayout:
-			cols:2
-			rows: 2
+		BoxLayout:
+			orientation: "horizontal"
+
+			Label:
+				text: "Comparison file"
+
+			TextInput:
+				id: parCompFile
+
+		BoxLayout:
+			orientation: "horizontal"
+
+			Button:
+				text: "SELECT"
+				on_release: 
+					root.select()
+					app.root.current = "parFileRes"
+
+			Button:
+				text: "RETURN"
+				on_release: app.root.current = "parSus"
+
+<PlainSusWindow>:
+	name: "plainSus"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Drag your file onto the input field"
+
+		BoxLayout:
+			orientation: "horizontal"
 
 			Label:
 				text: "Suspect file"
@@ -104,11 +136,37 @@ WindowManager:
 				id: plainSusFile
 
 
+		BoxLayout:
+			orientation: "horizontal"
+
+			Button:
+				text: "SELECT"
+				on_release: 
+					root.select()
+					app.root.current = "plainComp"
+
+			Button:
+				text: "RETURN"
+				on_release: app.root.current = "modeSel"
+
+<PlainCompWindow>:
+	name: "plainComp"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Drag your file onto the input field"
+
+		BoxLayout:
+			orientation: "horizontal"
+
 			Label:
-				text: "Source file"
+				text: "Comparison file"
 
 			TextInput:
-				id: plainSrcFile
+				id: plainCompFile
 
 
 		BoxLayout:
@@ -117,13 +175,12 @@ WindowManager:
 			Button:
 				text: "SELECT"
 				on_release: 
-					root.plainSelect()
+					root.select()
 					app.root.current = "plainRes"
 
 			Button:
 				text: "RETURN"
-				on_release: app.root.current = "modeSel"
-
+				on_release: app.root.current = "plainSus"
 
 <ParFileResultsWindow>:
 	name: "parFileRes"

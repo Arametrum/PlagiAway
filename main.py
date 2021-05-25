@@ -8,6 +8,13 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 
+class InputData:
+    plainSusPath = ""
+    plainCompPath = ""
+
+    parSusPath = ""
+    parCompPath = ""
+
 class WindowManager(ScreenManager):
     pass
 
@@ -15,22 +22,48 @@ class MainWindow(Screen):
     pass
 
 class ModeSelectWindow(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        Window.bind(on_dropfile = self.dropfile)
+
+    def plain(self):
+        self.manager.get_screen("plainSus").ids["plainSusFile"].text = ""
+
+    def par(self):
+        self.manager.get_screen("parSus").ids["parSusFile"].text = ""
+
+    def dropfile(self, window, path):
+        self.manager.get_screen("plainSus").ids["plainSusFile"].text = path
+        self.manager.get_screen("parSus").ids["parSusFile"].text = path
+        self.manager.get_screen("plainComp").ids["plainCompFile"].text = path
+        self.manager.get_screen("parComp").ids["parCompFile"].text = path
     pass
 
 #Paragraph-stuctured file reading
-class ParFileWindow(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        Window.bind(on_dropfile = self.onFileDrop)
+class ParSusWindow(Screen):
+    def select(self):
+        self.manager.get_screen("parComp").ids["parCompFile"].text = ""
+        InputData.parSusPath = self.ids["parSusFile"].text
+    pass
 
-    def onFileDrop(self, window, file_path):
-        self.ids["parSusFile"].text = file_path
+#Paragraph-stuctured file reading
+class ParCompWindow(Screen):
+    def select(self):
+        InputData.parCompPath = self.ids["parCompFile"].text
     pass
 
 #Plain file reading
-class PlainFileWindow(Screen):
-    def plainSelect(self):
-        tmp = self.ids.plainSusFile.text
+class PlainSusWindow(Screen):
+    def select(self):
+        self.manager.get_screen("plainComp").ids["plainCompFile"].text = ""
+        InputData.plainSusPath = self.ids["plainSusFile"].text
+
+    pass
+
+#Plain file reading
+class PlainCompWindow(Screen):
+    def select(self):
+        InputData.test.plainCompPath = self.ids["plainCompFile"].text
 
     pass
 
