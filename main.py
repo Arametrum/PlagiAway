@@ -3,6 +3,7 @@ import Fingerprints as fp
 import Comparison as cp
 import Testing
 import Analysis as an
+import os.path
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -12,8 +13,41 @@ class InputData:
     plainSusPath = ""
     plainCompPath = ""
 
+    plainSusFile = []
+    plainCompFile = []
+
     parSusPath = ""
     parCompPath = ""
+
+    parSusFile = []
+    parCompFile = []
+
+    plainRes = 0
+    parRes = 0
+
+    plainResOffset = 0
+    parResOffset = 0
+
+    def computePlain():
+        InputData.plainSusFile = dr.readFile(InputData.plainSusPath)
+        InputData.plainCompFile = dr.readFile(InputData.plainCompPath)
+
+        InputData.plainRes = an.analyseFileComp(Testing.multFingerprints(InputData.plainSusFile, InputData.plainCompFile))
+        InputData.plainResOffset = an.analyseFileComp(Testing.offsetFingerprints(InputData.plainSusFile, InputData.plainCompFile))
+
+        print(InputData.plainRes)
+        print(InputData.plainResOffset)
+
+    def computePar():
+        InputData.parSusFile = dr.readByParagraphs(InputData.parSusPath)
+        InputData.parCompFile = dr.readByParagraphs(InputData.parCompPath)
+
+        InputData.parRes = an.analyseParagraphComp(Testing.multFprintParagraph(InputData.parSusFile, InputData.parCompFile))
+        InputData.parResOffset = an.analyseParagraphComp(Testing.multFprintParagraph(InputData.parSusFile, InputData.parCompFile))
+
+        print(InputData.parRes)
+        print(InputData.parResOffset)
+    pass
 
 class WindowManager(ScreenManager):
     pass
@@ -44,12 +78,22 @@ class ParSusWindow(Screen):
     def select(self):
         self.manager.get_screen("parComp").ids["parCompFile"].text = ""
         InputData.parSusPath = self.ids["parSusFile"].text
+
+        if os.path.isfile(InputData.parSusPath):
+            self.manager.current = "parComp"
     pass
 
 #Paragraph-stuctured file reading
 class ParCompWindow(Screen):
     def select(self):
         InputData.parCompPath = self.ids["parCompFile"].text
+
+        if os.path.isfile(InputData.parCompPath):
+            InputData.computePar()
+            self.manager.current = "parFileRes"
+
+    def ret(self):
+        self.manager.get_screen("parSus").ids["parSusFile"].text = ""
     pass
 
 #Plain file reading
@@ -58,13 +102,28 @@ class PlainSusWindow(Screen):
         self.manager.get_screen("plainComp").ids["plainCompFile"].text = ""
         InputData.plainSusPath = self.ids["plainSusFile"].text
 
+        if os.path.isfile(InputData.plainSusPath):
+            self.manager.current = "plainComp"
+
     pass
 
 #Plain file reading
 class PlainCompWindow(Screen):
     def select(self):
-        InputData.test.plainCompPath = self.ids["plainCompFile"].text
+        InputData.plainCompPath = self.ids["plainCompFile"].text
 
+        if os.path.isfile(InputData.plainCompPath):
+            InputData.computePlain()
+            self.manager.get_screen("plainRes").ids["plain4ResAver"].text = str(InputData.plainRes[0][0])
+            self.manager.get_screen("plainRes").ids["plain4ResHigh"].text = str(InputData.plainRes[0][1])
+            self.manager.get_screen("plainRes").ids["plain5ResAver"].text = str(InputData.plainRes[1][0])
+            self.manager.get_screen("plainRes").ids["plain5ResHigh"].text = str(InputData.plainRes[1][1])
+
+            self.manager.current = "plainRes"
+            
+
+    def ret(self):
+        self.manager.get_screen("plainSus").ids["plainSusFile"].text = ""
     pass
 
 #Results for entire par.-struct. file

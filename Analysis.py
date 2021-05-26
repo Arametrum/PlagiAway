@@ -73,7 +73,13 @@ def analyseParagraphComp(results):
     match5 = mergeStrings(match5)
     analysed5 = (aver5, high5, match5)
 
-    return (analysed4, analysed5)
+    fileAver4 = np.average(aver4)
+    fileAver5 = np.average(aver5)
+
+    fileHigh4 = np.amax(high4)
+    fileHigh5 = np.amax(high5)
+
+    return ((analysed4, fileAver4, fileHigh4), (analysed5, fileAver5, fileHigh5))
     pass
 
 #Analyses results for a single size comparison(e.g. results for fingerprint size 4)
@@ -92,6 +98,8 @@ def analyseSingleSize(query):
 
     average /= len(query)
 
+    average = float("{:.2f}".format(average))
+    highest = float("{:.2f}".format(highest))
     return (average, highest, matchedStrings)
     pass
 
@@ -147,3 +155,4 @@ def mergeStrings(query):
 
     return mergedString
     pass
+

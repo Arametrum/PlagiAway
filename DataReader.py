@@ -15,15 +15,13 @@ def readFile(path):
     data = []
 
     try:
-        file = open(path, 'r')
+        with open(path, 'r') as file:
 
-        for line in file:
-            words = prepLine(line.lower())
+            for line in file:
+                words = prepLine(line.lower())
             
-            for i in words:
-                data.append(i)
-
-        file.close()
+                for i in words:
+                    data.append(i)
     except:
         return []
 
@@ -35,23 +33,21 @@ def readByParagraphs(path):
     data = []
 
     try:
-        file = open(path, 'r')
-        paragraph = []
+        with open(path, 'r') as file:
+            paragraph = []
 
-        for line in file:
-            words = prepLine(line.lower())
+            for line in file:
+                words = prepLine(line.lower())
             
-            if line == "\n":
+                if line == "\n":
+                    data.append(paragraph)
+                    paragraph = []
+
+                for i in words:
+                    paragraph.append(i)
+
+            if paragraph:
                 data.append(paragraph)
-                paragraph = []
-
-            for i in words:
-                paragraph.append(i)
-
-        if paragraph:
-            data.append(paragraph)
-
-        file.close()
     except:
         return []
 

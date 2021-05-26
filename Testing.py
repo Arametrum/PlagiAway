@@ -3,6 +3,7 @@ import random
 
 ITERATIONS = 5
 OFFSET = 7
+PAR_OFFSET = 3
 #All tests for fingerprint sizes 4 and 5
 
 #Tests suspect file with multiple sets of fingerprints
@@ -46,7 +47,7 @@ def offsetFprintParagraph(suspectFile, comparisonFile):
     results4 = []
     results5 = []
 
-    offsetSuspect = [[par[OFFSET * (i + 1):] for par in suspectFile] for i in range(ITERATIONS)]
+    offsetSuspect = [[par[PAR_OFFSET * (i + 1):] for par in suspectFile] for i in range(ITERATIONS)]
 
     for i in range(ITERATIONS):
         results4.append(cp.compareParagraphs(offsetSuspect[i], comparisonFile, 4))

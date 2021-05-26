@@ -78,7 +78,6 @@ WindowManager:
 				text: "SELECT"
 				on_release: 
 					root.select()
-					app.root.current = "parComp"
 
 			Button:
 				text: "RETURN"
@@ -110,11 +109,12 @@ WindowManager:
 				text: "SELECT"
 				on_release: 
 					root.select()
-					app.root.current = "parFileRes"
 
 			Button:
 				text: "RETURN"
-				on_release: app.root.current = "parSus"
+				on_release: 
+					root.ret()
+					app.root.current = "parSus"
 
 <PlainSusWindow>:
 	name: "plainSus"
@@ -143,7 +143,6 @@ WindowManager:
 				text: "SELECT"
 				on_release: 
 					root.select()
-					app.root.current = "plainComp"
 
 			Button:
 				text: "RETURN"
@@ -176,11 +175,12 @@ WindowManager:
 				text: "SELECT"
 				on_release: 
 					root.select()
-					app.root.current = "plainRes"
 
 			Button:
 				text: "RETURN"
-				on_release: app.root.current = "plainSus"
+				on_release: 
+					root.ret()
+					app.root.current = "plainSus"
 
 <ParFileResultsWindow>:
 	name: "parFileRes"
@@ -192,18 +192,50 @@ WindowManager:
 		Label:
 			text: "Aggregated comparison results"
 
+		Label:
+			text: "4 word substrings"
 		GridLayout:
 			cols: 2
-			rows: 3
+			rows: 2
 
+			
 			Label:
 				text: "Average overlap"
+
 			Label:
+				id: par4FileAver
 				text: "val"
+
 			Label:
 				text: "Highest overlap"
+
 			Label:
+				id: par4FileHigh
 				text: "val"
+
+		Label:
+			text: "5 word substrings"
+		GridLayout:
+			cols: 2
+			rows: 2
+
+			
+			Label:
+				text: "Average overlap"
+
+			Label:
+				id: par5FileAver
+				text: "val"
+
+			Label:
+				text: "Highest overlap"
+
+			Label:
+				id: par5FileHigh
+				text: "val"
+
+		BoxLayout:
+			orientation: "horizontal"
 
 			Button:
 				text: "DETAILS"
@@ -213,6 +245,8 @@ WindowManager:
 				text: "BACK TO MENU"
 				on_release: app.root.current = "main"
 
+<ParOffsetWindow>:
+	name: "parOffset"
 
 <PlainResultsWindow>:
 	name: "plainRes"
@@ -224,18 +258,50 @@ WindowManager:
 		Label:
 			text: "Aggregated comparison results"
 
+		Label:
+			text: "4 word substrings"
+
 		GridLayout:
 			cols: 2
-			rows: 3
+			rows: 2
 
 			Label:
 				text: "Average overlap"
+
 			Label:
+				id: plain4ResAver
 				text: "val"
+
 			Label:
 				text: "Highest overlap"
+
 			Label:
+				id: plain4ResHigh
 				text: "val"
+
+		Label:
+			text: "5 word substrings"
+
+		GridLayout:
+			cols: 2
+			rows: 2
+
+			Label:
+				text: "Average overlap"
+
+			Label:
+				id: plain5ResAver
+				text: "val"
+
+			Label:
+				text: "Highest overlap"
+
+			Label:
+				id: plain5ResHigh
+				text: "val"
+
+		BoxLayout:
+			orientation: "horizontal"
 
 			Button:
 				text: "DETAILS"
@@ -244,6 +310,9 @@ WindowManager:
 			Button:
 				text: "BACK TO MENU"
 				on_release: app.root.current = "main"
+
+<PlainOffsetWindow>:
+	name: "plainOffset"
 
 <ParSingleResultsWindow>:
 	name: "parSingleRes"
