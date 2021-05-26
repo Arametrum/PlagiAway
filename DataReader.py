@@ -15,7 +15,7 @@ def readFile(path):
     data = []
 
     try:
-        with open(path, 'r') as file:
+        with open(path, 'r', encoding = 'UTF-8') as file:
 
             for line in file:
                 words = prepLine(line.lower())
@@ -33,7 +33,7 @@ def readByParagraphs(path):
     data = []
 
     try:
-        with open(path, 'r') as file:
+        with open(path, 'r', encoding = 'UTF-8') as file:
             paragraph = []
 
             for line in file:

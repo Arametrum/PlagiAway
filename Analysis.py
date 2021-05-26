@@ -73,11 +73,11 @@ def analyseParagraphComp(results):
     match5 = mergeStrings(match5)
     analysed5 = (aver5, high5, match5)
 
-    fileAver4 = np.average(aver4)
-    fileAver5 = np.average(aver5)
+    fileAver4 = float("{:.2f}".format(np.average(aver4)))
+    fileAver5 = float("{:.2f}".format(np.average(aver5)))
 
-    fileHigh4 = np.amax(high4)
-    fileHigh5 = np.amax(high5)
+    fileHigh4 = float("{:.2f}".format(np.amax(high4)))
+    fileHigh5 = float("{:.2f}".format(np.amax(high5)))
 
     return ((analysed4, fileAver4, fileHigh4), (analysed5, fileAver5, fileHigh5))
     pass

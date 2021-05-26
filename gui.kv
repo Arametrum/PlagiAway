@@ -10,6 +10,11 @@ WindowManager:
 	ParSingleResultsWindow:
 	ParMatchedStringsWindow:
 	PlainMatchedStringsWindow:
+	ParOffsetWindow:
+	PlainOffsetWindow:
+	ParSingleOffsetWindow:
+	ParMatchedOffsetWindow:
+	PlainMatchedOffsetWindow:
 
 <MainWindow>:
 	name: "main"
@@ -239,7 +244,14 @@ WindowManager:
 
 			Button:
 				text: "DETAILS"
-				on_release: app.root.current = "parSingleRes"
+				on_release: 
+					root.details()
+					app.root.current = "parSingleRes"
+
+			Button:
+				text: "OFFSET"
+				on_release:
+					app.root.current = "parOffset"
 
 			Button:
 				text: "BACK TO MENU"
@@ -247,6 +259,69 @@ WindowManager:
 
 <ParOffsetWindow>:
 	name: "parOffset"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Aggregated comparison results for offset fingerprints"
+
+		Label:
+			text: "4 word substrings"
+		GridLayout:
+			cols: 2
+			rows: 2
+
+			
+			Label:
+				text: "Average overlap"
+
+			Label:
+				id: par4OffAver
+				text: "val"
+
+			Label:
+				text: "Highest overlap"
+
+			Label:
+				id: par4OffHigh
+				text: "val"
+
+		Label:
+			text: "5 word substrings"
+		GridLayout:
+			cols: 2
+			rows: 2
+
+			
+			Label:
+				text: "Average overlap"
+
+			Label:
+				id: par5OffAver
+				text: "val"
+
+			Label:
+				text: "Highest overlap"
+
+			Label:
+				id: par5OffHigh
+				text: "val"
+
+		BoxLayout:
+			orientation: "horizontal"
+
+			Button:
+				text: "DETAILS"
+				on_release: 
+					root.details()
+					app.root.current = "parSingleOff"
+
+			Button:
+				text: "RETURN"
+				on_release: app.root.current = "parFileRes"
+
 
 <PlainResultsWindow>:
 	name: "plainRes"
@@ -305,7 +380,14 @@ WindowManager:
 
 			Button:
 				text: "DETAILS"
-				on_release: app.root.current = "plainString"
+				on_release: 
+					root.details()
+					app.root.current = "plainString"
+
+			Button:
+				text: "OFFSET"
+				on_release:
+					app.root.current = "plainOffset"
 
 			Button:
 				text: "BACK TO MENU"
@@ -313,6 +395,68 @@ WindowManager:
 
 <PlainOffsetWindow>:
 	name: "plainOffset"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Aggregated comparison results"
+
+		Label:
+			text: "4 word substrings"
+
+		GridLayout:
+			cols: 2
+			rows: 2
+
+			Label:
+				text: "Average overlap"
+
+			Label:
+				id: plain4OffAver
+				text: "val"
+
+			Label:
+				text: "Highest overlap"
+
+			Label:
+				id: plain4OffHigh
+				text: "val"
+
+		Label:
+			text: "5 word substrings"
+
+		GridLayout:
+			cols: 2
+			rows: 2
+
+			Label:
+				text: "Average overlap"
+
+			Label:
+				id: plain5OffAver
+				text: "val"
+
+			Label:
+				text: "Highest overlap"
+
+			Label:
+				id: plain5OffHigh
+				text: "val"
+
+		BoxLayout:
+			orientation: "horizontal"
+
+			Button:
+				text: "DETAILS"
+				on_release: 
+					root.details()
+					app.root.current = "plainStringOff"
+
+			Button:
+				text: "RETURN"
+				on_release: app.root.current = "plainRes"
 
 <ParSingleResultsWindow>:
 	name: "parSingleRes"
@@ -324,6 +468,17 @@ WindowManager:
 		Button:
 			text: "RETURN"
 			on_release: app.root.current = "parFileRes"
+
+<ParSingleOffsetWindow>:
+	name: "parSingleOff"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Button:
+			text: "RETURN"
+			on_release: app.root.current = "parOffset"
 
 <ParMatchedStringsWindow>:
 	name: "parString"
@@ -350,8 +505,8 @@ WindowManager:
 			text: "RETURN"
 			on_release: app.root.current = "parSingleRes"
 
-<PlainMatchedStringsWindow>:
-	name: "plainString"
+<ParMatchedOffsetWindow>:
+	name: "parStringOff"
 
 	BoxLayout:
 		orientation: "vertical"
@@ -371,18 +526,68 @@ WindowManager:
 
 				height: self.minimum_height
 
-				Label:
-					text: "beep"
-					size_hint_y: None
-
-				Label:
-					text: "bap"
-					size_hint_y: None
-
-				Label:
-					text: "boop"
-					size_hint_y: None
-		
 		Button:
 			text: "RETURN"
-			on_release: app.root.current = "plainRes"
+			on_release: app.root.current = "parSingleOff"
+
+<PlainMatchedStringsWindow>:
+	name: "plainString"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Possible matches"
+			size_hint_y: 0.25
+
+		ScrollView:
+			id: plainScroll
+			bar_width: 6
+			bar_color: [0.5, 0.5, 0.2, 0.7]
+
+			Label:
+				id: plainBox
+				size: self.texture_size
+				size_hint_y: None
+				valign: "center"
+		
+		AnchorLayout:
+			anchor_x: "center"
+			size_hint_y: 0.25
+
+			Button:
+				text: "RETURN"
+				size_hint_x: 0.5
+				on_release: app.root.current = "plainRes"
+
+<PlainMatchedOffsetWindow>:
+	name: "plainStringOff"
+
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Possible matches"
+			size_hint_y: 0.25
+
+		ScrollView:
+			id: plainOffScroll
+			bar_width: 6
+			bar_color: [0.5, 0.5, 0.2, 0.7]
+				
+			Label:
+				id: plainBoxOff
+				size: self.texture_size
+				size_hint_y: None
+				valign: "center"
+
+		AnchorLayout:
+			anchor_x: "center"
+			size_hint_y: 0.25
+
+			Button:
+				text: "RETURN"
+				size_hint_x: 0.5
+				on_release: app.root.current = "plainOffset"
