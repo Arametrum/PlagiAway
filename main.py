@@ -11,6 +11,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.uix.label import Label
+from kivy.uix.button import Button
 
 class InputData:
     plainSusPath = ""
@@ -45,7 +46,6 @@ class InputData:
 
         InputData.parRes = an.analyseParagraphComp(Testing.multFprintParagraph(InputData.parSusFile, InputData.parCompFile))
         InputData.parResOffset = an.analyseParagraphComp(Testing.offsetFprintParagraph(InputData.parSusFile, InputData.parCompFile))
-        print(InputData.parRes)
 
     pass
 
@@ -144,12 +144,41 @@ class PlainCompWindow(Screen):
 #Results for entire par.-struct. file
 class ParFileResultsWindow(Screen):
     def details(self):
-        pass
+        self.manager.get_screen("parSingleRes").ids["parSinRes"].clear_widgets()
+
+        for index, parAver in enumerate(InputData.parRes[0][0][0]):
+            parText = "Paragraph " + str(index + 1)
+
+            text4 = "4 word substrings\nAverage overlap: " + str(parAver)[:4]
+            text4 += "\nHighest overlap:" + str(InputData.parRes[0][0][1][index])[:4]
+
+            text5 = "5 word substrings\nAverage overlap: " + str(InputData.parRes[1][0][0][index])[:4]
+            text5 += "\nHighest overlaps" + str(InputData.parRes[1][0][1][index])[:4]
+
+            self.manager.get_screen("parSingleRes").ids["parSinRes"].add_widget(Label(size_hint_y = None, text = parText))
+            self.manager.get_screen("parSingleRes").ids["parSinRes"].add_widget(Label(size_hint_y = None, text = text4))
+            self.manager.get_screen("parSingleRes").ids["parSinRes"].add_widget(Label(size_hint_y = None, text = text5))
+            self.manager.get_screen("parSingleRes").ids["parSinRes"].add_widget(Button(size_hint_y = None))
+
     pass
 
 class ParOffsetWindow(Screen):
     def details(self):
-        pass
+        self.manager.get_screen("parSingleOff").ids["parSinOff"].clear_widgets()
+
+        for index, parAver in enumerate(InputData.parResOffset[0][0][0]):
+            parText = "Paragraph " + str(index + 1)
+
+            text4 = "4 word substrings\nAverage overlap: " + str(parAver)[:4]
+            text4 += "\nHighest overlap:" + str(InputData.parResOffset[0][0][1][index])[:4]
+
+            text5 = "5 word substrings\nAverage overlap: " + str(InputData.parResOffset[1][0][0][index])[:4]
+            text5 += "\nHighest overlaps" + str(InputData.parResOffset[1][0][1][index])[:4]
+
+            self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Label(size_hint_y = None, text = parText))
+            self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Label(size_hint_y = None, text = text4))
+            self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Label(size_hint_y = None, text = text5))
+            self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Button(size_hint_y = None))
     pass
 
 class PlainResultsWindow(Screen):
