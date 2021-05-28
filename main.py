@@ -12,6 +12,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.uix.label import Label
 from kivy.uix.button import Button
+import re
 
 class InputData:
     plainSusPath = ""
@@ -158,8 +159,22 @@ class ParFileResultsWindow(Screen):
             self.manager.get_screen("parSingleRes").ids["parSinRes"].add_widget(Label(size_hint_y = None, text = parText))
             self.manager.get_screen("parSingleRes").ids["parSinRes"].add_widget(Label(size_hint_y = None, text = text4))
             self.manager.get_screen("parSingleRes").ids["parSinRes"].add_widget(Label(size_hint_y = None, text = text5))
-            self.manager.get_screen("parSingleRes").ids["parSinRes"].add_widget(Button(size_hint_y = None))
+            self.manager.get_screen("parSingleRes").ids["parSinRes"].add_widget(Button(text = "PARAGRAPH " + str(index + 1) + " \nDETAILS", size_hint_y = None, on_release = self.parDetails))
+            
 
+
+    def parDetails(self, instance):
+        parNum = int(re.match("\D*(?P<num>\d*)\D*", instance.text).group("num")) - 1
+        tmp = ""
+
+        for string in InputData.parRes[0][0][2][parNum]:
+            tmp += string + "\n"
+
+        for string in InputData.parRes[1][0][2][parNum]:
+            tmp += string + "\n"
+
+        self.manager.get_screen("parString").ids["parStrings"].text = tmp
+        self.manager.current = "parString"
     pass
 
 class ParOffsetWindow(Screen):
@@ -178,7 +193,8 @@ class ParOffsetWindow(Screen):
             self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Label(size_hint_y = None, text = parText))
             self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Label(size_hint_y = None, text = text4))
             self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Label(size_hint_y = None, text = text5))
-            self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Button(size_hint_y = None))
+            self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Button(size_hint_y = None, id = index, text = "PARAGRAPH\nDETAILS"))
+
     pass
 
 class PlainResultsWindow(Screen):
