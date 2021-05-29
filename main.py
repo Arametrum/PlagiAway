@@ -193,8 +193,21 @@ class ParOffsetWindow(Screen):
             self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Label(size_hint_y = None, text = parText))
             self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Label(size_hint_y = None, text = text4))
             self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Label(size_hint_y = None, text = text5))
-            self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Button(size_hint_y = None, id = index, text = "PARAGRAPH\nDETAILS"))
+            self.manager.get_screen("parSingleOff").ids["parSinOff"].add_widget(Button(size_hint_y = None, text = "PARAGRAPH " + str(index + 1) + " \nDETAILS", on_release = self.parDetails))
 
+
+    def parDetails(self, instance):
+        parNum = int(re.match("\D*(?P<num>\d*)\D*", instance.text).group("num")) - 1
+        tmp = ""
+
+        for string in InputData.parResOffset[0][0][2][parNum]:
+            tmp += string + "\n"
+
+        for string in InputData.parResOffset[1][0][2][parNum]:
+            tmp += string + "\n"
+
+        self.manager.get_screen("parStringOff").ids["parStringsOff"].text = tmp
+        self.manager.current = "parStringOff"
     pass
 
 class PlainResultsWindow(Screen):

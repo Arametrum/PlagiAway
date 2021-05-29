@@ -401,7 +401,7 @@ WindowManager:
 		size: root.width, root.height
 
 		Label:
-			text: "Aggregated comparison results"
+			text: "Aggregated comparison results for offset fingerprints"
 
 		Label:
 			text: "4 word substrings"
@@ -532,6 +532,7 @@ WindowManager:
 
 		Label:
 			text: "Possible matches"
+			size_hint_y: 0.25
 
 		ScrollView:
 			bar_width: 6
@@ -544,9 +545,14 @@ WindowManager:
 				size: self.texture_size
 
 
-		Button:
-			text: "RETURN"
-			on_release: app.root.current = "parSingleRes"
+		AnchorLayout:
+			anchor_x: "center"
+			size_hint_y: 0.25
+
+			Button:
+				text: "RETURN"
+				size_hint_x: 0.5
+				on_release: app.root.current = "parSingleRes"
 
 <ParMatchedOffsetWindow>:
 	name: "parStringOff"
@@ -554,24 +560,30 @@ WindowManager:
 	BoxLayout:
 		orientation: "vertical"
 		size: root.width, root.height
+		
 
 		Label:
 			text: "Possible matches"
+			size_hint_y: 0.25
 
 		ScrollView:
 			bar_width: 6
 			bar_color: [0.5, 0.5, 0.2, 0.7]
 
-			BoxLayout:
-				orientation: "vertical"
+			Label:
+				id: parStringsOff
 				size_hint_y: None
-				size_hint_x: 1
+				valign: "center"
+				size: self.texture_size
 
-				height: self.minimum_height
+		AnchorLayout:
+			anchor_x: "center"
+			size_hint_y: 0.25
 
-		Button:
-			text: "RETURN"
-			on_release: app.root.current = "parSingleOff"
+			Button:
+				text: "RETURN"
+				size_hint_x: 0.5
+				on_release: app.root.current = "parSingleOff"
 
 <PlainMatchedStringsWindow>:
 	name: "plainString"
