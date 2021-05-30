@@ -72,6 +72,12 @@ class ModeSelectWindow(Screen):
         self.manager.get_screen("parSus").ids["parSusFile"].text = path
         self.manager.get_screen("plainComp").ids["plainCompFile"].text = path
         self.manager.get_screen("parComp").ids["parCompFile"].text = path
+
+    def exit(self):
+        App.get_running_app().stop()
+    pass
+
+class HelpWindow(Screen):
     pass
 
 #Paragraph-stuctured file reading

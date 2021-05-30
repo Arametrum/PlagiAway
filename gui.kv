@@ -1,6 +1,7 @@
 WindowManager:
 	MainWindow:
 	ModeSelectWindow:
+	HelpWindow:
 	ParSusWindow:
 	ParCompWindow:
 	PlainSusWindow:
@@ -38,12 +39,28 @@ WindowManager:
 		orientation: "vertical"
 		size: root.width, root.height
 
+		BoxLayout:
+			size_hint_y: 0.5
+
+			Button:
+				text: "HELP"
+				on_release: app.root.current = "help"
+
+			Label:
+				size_hint_x: 2
+
+			Button:
+				text: "EXIT"
+				on_release: root.exit()
+
 		Label:
 			text: "Choose mode"
 			font_size: 32
+			size_hint_y: 1.6
 
 		BoxLayout:
 			orientation: "horizontal"
+			size_hint_y: 1.4
 
 			Button:
 				text: "PLAIN"
@@ -56,6 +73,113 @@ WindowManager:
 				on_release: 
 					root.par()
 					app.root.current = "parSus"
+
+<HelpWindow>:
+	name: "help"
+	
+	BoxLayout:
+		orientation: "vertical"
+		size: root.width, root.height
+
+		Label:
+			text: "Help manual"
+			size_hint_y: 0.25
+
+		ScrollView:
+
+			BoxLayout:
+				orientation: "vertical"
+				size_hint_y: None
+				height: self.minimum_height
+
+				Label:
+					text: "DISCLAIMER:\nPlagiAway IS IN NO WAY AN ABSOLUTE MEASURE FOR CONTENT SIMILARITY\nALWAYS CHECK THE MATCHED TEXT MANUALLY\n\nThis manual outlines how to correctly format input data and interpret the results given\n"
+					size_hint_y: None
+
+				Label:
+					text: "INPUT"
+					size_hint_y: None
+
+				Label:
+					text: "PlagiAway operates in two modes - Plain and Paragraph\nPlain files are continuous and without any empty lines in the text.\nParagraph files are split into distinct paragraphs by single empty lines.\n"
+					size_hint_y: None
+
+				Label:
+					text: "The algorithms in use are optimised for the 256 UNICODE character set. \nIf your files include any characters beyond that scope, consider replacing them with latin replacements.\nShould this requirement not be fulfilled, the software might behave unpredictably."
+					size_hint_y: None
+
+				Label:
+					text: "All files need to have at least 200 words. For paragraph files there's an additional\nrequirement of 100 words per paragraph. Consider connecting smaller paragraphs together.\nThe programme fails if there isn't enough text for it to analyse.\nPlagiAway is designed to compare academic works that are much larger(4000 words on average).\nIt will perform its role on smaller files but it's probably an overkill"
+					size_hint_y: None
+
+				Label:
+					text: "OUTPUT"
+					size_hint_y: None
+
+				Label:
+					text: "Due to the nature of random fingerprint selection the results may vary for the\nsame pair of files over multiple checks. This is not a bug and simply the way\nrandom distribution on a limited set works. PlagiAway tries to counteract that\nby running multiple tests internally and taking the AVERAGE results.\n"
+					size_hint_y: None
+
+				Label:
+					text: "The initial results given are for randomly selected fingerprints from the user's files.\nThe -Average- is a simple average over all tests.\nThe -Highest- refers to the highest overlap across all tests.\nFor paragraph files these values are taken from ALL tests for EVERY paragraph.\n"
+					size_hint_y: None
+
+				Label:
+					text: "The -Offset- results are taken from the user's files that have been shifted left\nby different offsets multiple times as to check for copied text that was\nmisaligned on purpouse and might not have been picked up by the initial reuslts"
+					size_hint_y: None
+
+				Label:
+					text: "The values themselves are a fraction - the number of substrings matched\nwith the source file over the number of all substrings selected.\nThis value is recorded for every test ran. For -Average- it's aggregated by\naveraging them out. For -Highest- it's simply the highest value that occured."
+					size_hint_y: None
+
+				Label:
+					text: "For every mode and variation the user can see the list/lists of substrings\nthat have been flagged as matching. These can also be seen per paragraph\nin paragraph-structured files."
+					size_hint_y: None
+
+				Label:
+					text: "Paragraph files have extra info for each paragraph on its own.\nEach paragraph from the suspect file is checked against every paragraph from the source file.\nSame rules apply."
+					size_hint_y: None
+
+				Label:
+					text: "INTERPRETING THE OUTPUT"
+					size_hint_y: None
+
+				Label:
+					text: "These are a collection of general rules for how to interpret the results.\nNote that these are subject to exceptions and each case\nwarrants individual inspection of selected files."
+					size_hint_y: None
+
+				Label:
+					text: "PlagiAway only checks for verbatim plagiarism, i.e. copy-and-paste or word-for-word copying.\nIt is beyond this programme's scope to check for paraphrasing or citation-based plagiarism."
+					size_hint_y: None
+
+				Label:
+					text: "Average: low\nHighest: low\nUndected or non-existent plagiarism. Keep in mind that if either value\nis above 0.05 then it's no longer considered low."
+					size_hint_y: None
+
+				Label:
+					text: "Average: low\nHighest: medium\nThis means that there is a moderate section of matched text. Most likely a citation\nbut should probably be looked at."
+					size_hint_y: None
+
+				Label:
+					text: "Average: low\nHighest: high\nAlmost certainly extensive plagiarism or a very long citation.\nDefinitely check the matched text."
+					size_hint_y: None
+
+				Label:
+					text: "Average: medium\nHighest: medium\nThis is the most likely case for human-made plagiarism.\nAnalyse the suspect file carefully."
+					size_hint_y: None
+
+				Label:
+					text: "Average: high\nHighest: high\nThis is strange. The text has been matched and there is a lot of it\nbut due to random selection this is extremely unlikely to come up with such\nhigh consistency. Probably plagiarism and a statistical artifact too. Neat!"
+					size_hint_y: None
+		AnchorLayout:
+			anchor_x: "center"
+			size_hint_y: 0.5
+
+			Button:
+				text: "RETURN"
+				size_hint_x: 0.5
+
+				on_release: app.root.current = "modeSel"
 
 <ParSusWindow>:
 	name: "parSus"
