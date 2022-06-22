@@ -1,4 +1,4 @@
-# ProjektSkryptowe_254504
+# PlagiAway
 PlagiAway is a content similarity detection software for text files based on the Rabin Fingerprint
 
 Files maxTest/maxTest2 and maxTestPar/maxTestPar2 are for benchmarking the programme under a lot of computational strain
